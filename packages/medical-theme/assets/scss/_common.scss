@@ -1,0 +1,109 @@
+@use "media-queries";
+@use "variables";
+
+.use-text {
+  &-title {
+    font-weight: variables.$font-bold;
+    font-size: 48px;
+    line-height: 72px;
+    @include media-queries.breakpoints-down(md) {
+      font-size: 38px;
+      line-height: 60px;
+    }
+    @include media-queries.breakpoints-down(xs) {
+      font-size: 28px;
+      line-height: 44px;
+    }
+  }
+  &-title2 {
+    font-size: 36px;
+    line-height: 56px;
+    font-weight: variables.$font-bold;
+    @include media-queries.breakpoints-down(md) {
+      font-size: 32px;
+      line-height: 48px;
+    }
+    @include media-queries.breakpoints-down(xs) {
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
+  &-subtitle {
+    font-weight: variables.$font-medium;
+    font-size: 28px;
+    line-height: 44px;
+    @include media-queries.breakpoints-down(md) {
+      font-size: 24px;
+      line-height: 36px;
+    }
+    @include media-queries.breakpoints-down(xs) {
+      font-size: 18px;
+      line-height: 28px;
+    }
+  }
+  &-subtitle2 {
+    font-weight: variables.$font-regular;
+    font-size: 22px;
+    line-height: 32px;
+    @include media-queries.breakpoints-down(md) {
+      font-size: 20px;
+      line-height: 32px
+    }
+    @include media-queries.breakpoints-down(xs) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+  &-paragraph {
+    font-weight: variables.$font-regular;
+    font-size: 16px;
+    line-height: 24px
+  }
+  &-caption {
+    font-weight: variables.$font-regular;
+    font-size: 16px;
+    line-height: 24px;
+    @include media-queries.breakpoints-down(xs) {
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+}
+
+.use-hidden {
+  &-lg-down {
+    @include media-queries.breakpoints-down(lg) {
+      display: none !important;
+    }
+  }
+  &-md-down {
+    @include media-queries.breakpoints-down(md) {
+      display: none !important;
+    }
+  }
+  &-sm-down {
+    @include media-queries.breakpoints-down(sm) {
+      display: none !important;
+    }
+  }
+  &-xs-down {
+    @include media-queries.breakpoints-down(xs) {
+      display: none !important;
+    }
+  }
+  &-lg-up {
+    @include media-queries.breakpoints-up(lg) {
+      display: none !important;
+    }
+  }
+  &-md-up {
+    @include media-queries.breakpoints-up(md) {
+      display: none !important;
+    }
+  }
+  &-sm-up {
+    @include media-queries.breakpoints-up(sm) {
+      display: none !important;
+    }
+  }
+}

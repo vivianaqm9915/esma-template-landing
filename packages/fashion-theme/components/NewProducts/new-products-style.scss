@@ -1,0 +1,8 @@
+@use '@/assets/scss/styles' as *;
+
+.root {
+  position: relative;
+  @include breakpoints-down(xs) {
+    text-align: center
+  }
+}

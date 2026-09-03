@@ -1,0 +1,132 @@
+<template>
+  <v-menu
+    
+    class="ma-0"
+  >
+    <template #activator="{ props }">
+      <div class="setting">
+        <v-btn
+          :class="{ invert: invert, active: open }"
+          v-bind="props"
+          icon="mdi-cog"
+        />
+      </div>
+    </template>
+    <v-list class="popover ocean-var">
+      <div class="mode-menu">
+        <v-list-subheader>{{ $t('educationLanding.header_theme') }}</v-list-subheader>
+        <v-list-item>
+          <div class="flex-menu">
+            <span>
+              {{ $t('educationLanding.header_light') }}
+            </span>
+            <v-switch
+              :model-value="isDark"
+              class="switch-toggle"
+              hide-details
+              color="secondary"
+              @change="switchDark()"
+            />
+            <span>
+              {{ $t('educationLanding.header_dark') }}
+            </span>
+          </div>
+        </v-list-item>
+      </div>
+      <v-divider />
+      <div class="lang-menu">
+        <v-list-subheader>{{ $t('educationLanding.header_language') }}</v-list-subheader>
+        <v-list-item
+          v-for="(lang, index) in langList"
+          :key="index"
+          :value="lang"
+          :to="$switchLocalePath(lang)"
+          @click="switchLang(lang)"
+          nuxt
+        >
+          <template #prepend>
+            <v-avatar class="flag">
+              <i :class="lang" />
+            </v-avatar>
+          </template>
+          <v-list-item-title class="lang-opt">
+            {{ $t('common.'+lang) }}
+          </v-list-item-title>
+          <template #append>
+            <v-icon
+              v-if="lang === curLang"
+              color="primary"
+            >
+              mdi-check
+            </v-icon>
+          </template>
+        </v-list-item>
+      </div>
+    </v-list>
+  </v-menu>
+</template>
+
+<style lang="scss" scoped>
+@use './header-style.scss';
+</style>
+
+<script>
+import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { toggleDark, setRtl } from '@/composables/uiTheme';
+
+export default {
+  props: {
+    invert: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup() {
+    const isDark = ref(false);
+    const i18n = useI18n();
+    const isLoaded = ref(false);
+    const curLang = i18n.locale.value;
+
+    onMounted(() => {
+      isLoaded.value = true;
+      isDark.value = localStorage.getItem('luxiDarkMode') === 'dark';
+    });
+
+    function switchDark() {
+      isDark.value = !isDark.value;
+      toggleDark();
+    }
+
+    function switchLang(locale) {
+      // i18n.setLocale(locale);
+      // Set RTL and Document attr
+      document.documentElement.setAttribute('lang', locale);
+
+      if (locale === 'ar') {
+        setRtl(true);
+        document.documentElement.setAttribute('dir', 'rtl');
+      } else {
+        setRtl(false);
+        document.documentElement.setAttribute('dir', 'ltr');
+      }
+    }
+
+    return {
+      isLoaded,
+      isDark,
+      curLang,
+      switchDark,
+      switchLang,
+    };
+  },
+  data: () => ({
+    open: false,
+  }),
+  computed: {
+    langList() {
+      return this.$i18n.availableLocales;
+    },
+  },
+};
+</script>
