@@ -3,11 +3,16 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
+# node:22-alpine bundles npm 10, whose optional-dependency resolver picks the
+# wrong libc variant for Nuxt's native oxc bindings on musl (alpine); npm 12
+# fixes that detection, so pin it here rather than relying on the base image.
+RUN npm install -g npm@12
+
 COPY package.json package-lock.json ./
-# --legacy-peer-deps: vite-plugin-vuetify@1.0.2 declares a peer range (vite 2-4)
-# older than the vite version Nuxt 3.21 actually bundles; the pair works fine in
-# practice, but strict peer resolution (and therefore `npm ci`) rejects it.
-RUN npm install --no-audit --no-fund --legacy-peer-deps
+# --dangerously-allow-all-scripts: npm 12 blocks install scripts for packages
+# not on an allowlist by default; this build stage is discarded after `.output`
+# is copied out, so there is no persistence risk in letting them run.
+RUN npm ci --no-audit --no-fund --dangerously-allow-all-scripts
 
 COPY . .
 RUN npm run build
