@@ -127,7 +127,6 @@
 <script>
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useSwitchLocalePath } from 'vue-i18n-routing';
 import { setRtl } from '@/composables/uiTheme';
 import logo from '@/assets/images/hosting-logo.svg'
 import brand from '@/assets/text/brand'

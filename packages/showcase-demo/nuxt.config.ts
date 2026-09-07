@@ -82,6 +82,7 @@ export default defineNuxtConfig({
     'vite-plugin-eslint'
   ],
   i18n: {
+    restructureDir: false,
     locales: languages,
     lazy: true,
     langDir: 'lang',

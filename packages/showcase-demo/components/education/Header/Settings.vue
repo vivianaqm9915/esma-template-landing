@@ -75,7 +75,6 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useSwitchLocalePath } from 'vue-i18n-routing';
 import { toggleDark, setRtl } from '@/composables/uiTheme';
 
 export default {
